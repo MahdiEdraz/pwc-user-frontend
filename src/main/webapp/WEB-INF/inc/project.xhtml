@@ -3,8 +3,69 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	>
 <ui:composition>
+<div class="p-formgroup-inline">
+		<h:form id="new_project_form">
+			<p:panelGrid columns="10">
+				<div class="p-field">
+					<label for="new_project" class="p-sr-only">new project</label>
+					<p:inputText id="new_project" value="#{projectController.newProject}" type="text"
+						placeholder="new project" />
+				</div>
+				<p:commandButton title="Create department" label="Submit"
+					actionListener="#{projectController.createProject()}" />
+			</p:panelGrid>
+		</h:form>
+	</div>
+	<h:form id="project_form">
+		<p:dataTable id="myEntityTable" var="item"
+			value="#{projectController.projectsDetails}" rowIndexVar="rowIndex"
+			editable="true">
+			<p:ajax event="rowEdit" listener="#{projectController.onRowEdit}"
+				update="@form" />
+			<p:ajax event="rowEditCancel" />
+
+			<p:column headerText="id">
+				<h:outputText value="#{item.id}" />
+			</p:column>
+
+			<p:column headerText="project name">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{item.name}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{item.name}" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+
+			<p:column headerText="employee Id">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{item.assignedUserId}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{item.assignedUserId}" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:6rem">
+				<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
+					saveTitle="Save Row" />
+			</p:column>
+			<p:column headerText="delete">
+				<h:commandButton value="-"
+					actionListener="#{projectController.deleteProject(rowIndex)}"
+					update="@form:myEntityTable" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
 
 
 </ui:composition>
