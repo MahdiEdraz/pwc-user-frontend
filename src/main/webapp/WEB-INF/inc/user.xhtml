@@ -3,9 +3,100 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	>
 <ui:composition>
+<ui:param name="newUser" value="#{controller.newUser}"></ui:param>
+<div class="p-formgroup-inline">
+<h:form id="new_user_form">
+<p:panelGrid  columns="10" >
+    <div class="p-field">
+        <label for="firstname" class="p-sr-only">Firstname</label>
+        <p:inputText id="firstname" value="#{newUser.firstName}" type="text" placeholder="Firstname" />
+    </div>
+    <div class="p-field">
+        <label for="lastname" class="p-sr-only">Lastname</label>
+        <p:inputText id="lastname" value="#{newUser.lastName}" type="text" placeholder="Lastname" />
+    </div>
+     <div class="p-field">
+        <label for="password" class="p-sr-only">Password</label>
+        <p:inputText id="password" value="#{newUser.password}" type="text" placeholder="Password" />
+    </div>
+    <div class="p-field">
+                <p:selectOneMenu id="option" value="#{newUser.userType}">
+                    <f:selectItem itemLabel="Select Type" itemValue=""/>
+                    <f:selectItem itemLabel="Manager" itemValue="Manager"/>
+                    <f:selectItem itemLabel="Employee" itemValue="Employee"/>
+                </p:selectOneMenu>
+    </div>
+    
+    <p:commandButton title="Create user"  label="Submit" actionListener="#{controller.createUser()}" />
+  
+    </p:panelGrid>
+      </h:form>
+    <h:form id="user_form">
+        <p:growl id="msgs" showDetail="true"/>
+     <p:dataTable id="myEntityTable" var="item" value="#{controller.users}" rowIndexVar="rowIndex" editable="true"      >
+     
+            <p:ajax event="rowEdit" listener="#{controller.onRowEdit}" update="@form:msgs"  />
+            <p:ajax event="rowEditCancel" />
+            
+        <p:column headerText="id">
+                        <h:outputText value="#{item.id}"/>
+            </p:column>
 
+        <p:column headerText="first name">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{item.firstName}"/>
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText  value="#{item.firstName}" />
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+
+        <p:column headerText="last name">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{item.lastName}"/>
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText  value="#{item.firstName}" />
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+        
+        <p:column headerText="user type">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{item.userType}"/>
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText  value="#{item.userType}" />
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column style="width:6rem">
+                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+            </p:column>
+<ui:remove>
+        <p:column headerText="increment">
+            <h:commandButton value="+"
+                actionListener="#{controller.updateUser(item,rowIndex)}"
+                update="@form:myEntityTable:@row(#{rowIndex})"/>
+        </p:column>
+        </ui:remove>
+        <p:column headerText="delete">
+            <h:commandButton value="-"
+                actionListener="#{controller.deleteUser(rowIndex)}"
+                update="@form:myEntityTable"/>
+        </p:column>
+    </p:dataTable>
+    </h:form>
+</div>
 
 </ui:composition>
 </html>
