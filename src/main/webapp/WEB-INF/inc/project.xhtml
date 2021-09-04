@@ -7,17 +7,22 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	>
 <ui:composition>
+<ui:param name="project" value="#{projectController.project}"></ui:param>
 <div class="p-formgroup-inline">
-		<h:form id="new_project_form">
-			<p:panelGrid columns="10">
-				<div class="p-field">
-					<label for="new_project" class="p-sr-only">new project</label>
-					<p:inputText id="new_project" value="#{projectController.newProject}" type="text"
-						placeholder="new project" />
-				</div>
-				<p:commandButton title="Create department" label="Submit"
-					actionListener="#{projectController.createProject()}" />
-			</p:panelGrid>
+		<h:form id="new_projet_form">
+		<p:panelGrid  columns="10" >
+    <div class="p-field">
+        <label for="firstname" class="p-sr-only">project name</label>
+        <p:inputText id="projectName" value="#{project.name}" type="text" placeholder="project name" />
+    </div>
+    <div class="p-field">
+        <label for="lastname" class="p-sr-only">user id</label>
+        <p:inputText id="userId" value="#{project.assignedUserId}" type="text" placeholder="user id" />
+    </div>
+    
+		<p:commandButton title="assign user to project" label="Submit"
+					actionListener="#{projectController.createProject()}" /> 
+					</p:panelGrid> 
 		</h:form>
 	</div>
 	<h:form id="project_form">
