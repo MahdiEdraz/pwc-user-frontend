@@ -3,9 +3,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition>
+	<div class="p-formgroup-inline">
+		<h:form id="new_department_form">
+			<p:panelGrid columns="10">
+				<div class="p-field">
+					<label for="new_department" class="p-sr-only">new department</label>
+					<p:inputText id="new_department" value="#{departmentController.newDepartment}" type="text"
+						placeholder="new department" />
+				</div>
+				<p:commandButton title="Create department" label="Submit"
+					actionListener="#{departmentController.createDepartment()}" />
+			</p:panelGrid>
+		</h:form>
+	</div>
+	<h:form id="department_form">
+		<p:dataTable id="myEntityTable" var="item"
+			value="#{departmentController.departmentsDetails}" rowIndexVar="rowIndex"
+			editable="true">
+			<p:ajax event="rowEdit" listener="#{departmentController.onRowEdit}"
+				update="@form" />
+			<p:ajax event="rowEditCancel" />
 
+			<p:column headerText="id">
+				<h:outputText value="#{item.id}" />
+			</p:column>
+
+			<p:column headerText="department name">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{item.departmentName}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{item.departmentName}" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+
+			<p:column headerText="employee Id">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{item.employeeId}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{item.employeeId}" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:6rem">
+				<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
+					saveTitle="Save Row" />
+			</p:column>
+			<p:column headerText="delete">
+				<h:commandButton value="-"
+					actionListener="#{departmentController.deleteDepartment(rowIndex)}"
+					update="@form:myEntityTable" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
 
 </ui:composition>
 </html>
