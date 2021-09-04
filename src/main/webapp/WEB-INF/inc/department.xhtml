@@ -6,17 +6,23 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition>
+<ui:param name="department" value="#{departmentController.department}"></ui:param>
+
 	<div class="p-formgroup-inline">
 		<h:form id="new_department_form">
-			<p:panelGrid columns="10">
-				<div class="p-field">
-					<label for="new_department" class="p-sr-only">new department</label>
-					<p:inputText id="new_department" value="#{departmentController.newDepartment}" type="text"
-						placeholder="new department" />
-				</div>
-				<p:commandButton title="Create department" label="Submit"
-					actionListener="#{departmentController.createDepartment()}" />
-			</p:panelGrid>
+		<p:panelGrid  columns="10" >
+    <div class="p-field">
+        <label for="firstname" class="p-sr-only">department name</label>
+        <p:inputText id="departmentName" value="#{department.departmentName}" type="text" placeholder="departmentName" />
+    </div>
+    <div class="p-field">
+        <label for="lastname" class="p-sr-only">user id</label>
+        <p:inputText id="userId2" value="#{department.employeeId}" type="text" placeholder="user id" />
+    </div>
+    
+		<p:commandButton title="assign user to department" label="Submit"
+					actionListener="#{departmentController.createDepartment()}" /> 
+					</p:panelGrid> 
 		</h:form>
 	</div>
 	<h:form id="department_form">
