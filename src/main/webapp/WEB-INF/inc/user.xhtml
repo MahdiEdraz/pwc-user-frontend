@@ -7,7 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	>
 <ui:composition>
-<ui:param name="newUser" value="#{controller.newUser}"></ui:param>
+<ui:param name="newUser" value="#{userController.newUser}"></ui:param>
 <div class="p-formgroup-inline">
 <h:form id="new_user_form">
 <p:panelGrid  columns="10" >
@@ -31,15 +31,15 @@
                 </p:selectOneMenu>
     </div>
     
-    <p:commandButton title="Create user"  label="Submit" actionListener="#{controller.createUser()}" />
+    <p:commandButton title="Create user"  label="Submit" actionListener="#{userController.createUser()}" />
   
     </p:panelGrid>
       </h:form>
     <h:form id="user_form">
         <p:growl id="msgs" showDetail="true"/>
-     <p:dataTable id="myEntityTable" var="item" value="#{controller.users}" rowIndexVar="rowIndex" editable="true"      >
+     <p:dataTable id="myEntityTable" var="item" value="#{userController.users}" rowIndexVar="rowIndex" editable="true"      >
      
-            <p:ajax event="rowEdit" listener="#{controller.onRowEdit}" update="@form:msgs"  />
+            <p:ajax event="rowEdit" listener="#{userController.onRowEdit}" update="@form:msgs"  />
             <p:ajax event="rowEditCancel" />
             
         <p:column headerText="id">
@@ -84,7 +84,7 @@
             </p:column>
         <p:column headerText="delete">
             <h:commandButton value="-"
-                actionListener="#{controller.deleteUser(rowIndex)}"
+                actionListener="#{userController.deleteUser(rowIndex)}"
                 update="@form:myEntityTable"/>
         </p:column>
     </p:dataTable>
