@@ -8,5 +8,24 @@
 		
 <h:body>
  <p:outputLabel> hello pwc user</p:outputLabel>	
+ <h:form id="form">
+
+    <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
+ 
+ <p:tabView>
+  <p:ajax event="tabChange" listener="#{controller.onTabChange}" update=":form:msgs"/>
+            <p:ajax event="tabClose" listener="#{controller.onTabClose}" update=":form:msgs"/>
+  
+            <p:tab title="User">
+              <ui:include src="/WEB-INF/inc/user.xhtml"/>
+            </p:tab>
+            <p:tab title="Department" closable="true">
+               <ui:include src="/WEB-INF/inc/department.xhtml"/>
+            </p:tab>
+            <p:tab title="Project" closable="true">
+               <ui:include src="/WEB-INF/inc/project.xhtml"/>
+            </p:tab>
+        </p:tabView>
+        </h:form>
 </h:body>
 </html>
