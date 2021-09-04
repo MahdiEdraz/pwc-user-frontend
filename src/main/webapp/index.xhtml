@@ -12,8 +12,8 @@
     <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
  
  <p:tabView>
-  <p:ajax event="tabChange" listener="#{controller.onTabChange}" />
-            <p:ajax event="tabClose" listener="#{controller.onTabClose}"/>
+  <p:ajax event="tabChange" listener="#{userController.onTabChange}" />
+            <p:ajax event="tabClose" listener="#{userController.onTabClose}"/>
   
             <p:tab title="User">
               <ui:include src="/WEB-INF/inc/user.xhtml"/>
